@@ -49,6 +49,18 @@ class PagesPage {
             await btn.click();
             console.log('Clicked on the Create Page button');
 
+            // --- AI HEALING: Check for Name Modal ---
+            const nameInput = this.page.locator('input[placeholder*="Name" i], input[name*="name" i]').first();
+            const saveBtn = this.page.locator('button:has-text("Save"), button:has-text("Create")').first();
+
+            if (await nameInput.isVisible({ timeout: 5000 }).catch(() => false)) {
+                console.log('Detected Page Name modal. Entering name...');
+                const pageName = `Automation Page ${new Date().getTime()}`;
+                await nameInput.fill(pageName);
+                await saveBtn.click();
+                console.log(`Page name "${pageName}" entered and saved.`);
+            }
+
         } catch (error) {
             console.error('Error clicking Create Page button:', error);
             throw new Error(`Failed to click "Create Page" button. \nLocators tried:\n- Role: button w/ "Create Page"\n- ID: #page-list-nodata button\n- Class: button.page-name-modal\n- Text: "Create Page"`);

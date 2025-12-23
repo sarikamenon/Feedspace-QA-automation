@@ -40,9 +40,10 @@ function generateSummary() {
 
     if (githubSummaryPath) {
         fs.appendFileSync(githubSummaryPath, markdown);
-    } else {
-        console.log(markdown);
     }
+
+    // Always log to console so user can see it in job logs too
+    console.log(markdown);
 }
 
 generateSummary();
